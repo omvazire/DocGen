@@ -10,7 +10,7 @@ export default function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
   const [error, setError] = useState('');
-  const [form, setForm] = useState({ name: '', source: 'github', repoUrl: '', code: '' });
+  const [form, setForm] = useState({ name: '', source: 'github', repoUrl: '', code: '', fileName: '' });
 
   const fetchProjects = async () => {
     try {
@@ -39,7 +39,7 @@ export default function Dashboard() {
       if (!res.ok) throw new Error(data.error);
       setProjects([data, ...projects]);
       setShowModal(false);
-      setForm({ name: '', source: 'github', repoUrl: '', code: '' });
+      setForm({ name: '', source: 'github', repoUrl: '', code: '', fileName: '' });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -163,17 +163,29 @@ export default function Dashboard() {
                   />
                 </div>
               ) : (
-                <div className="form-group">
-                  <label htmlFor="code-input">Code</label>
-                  <textarea
-                    id="code-input"
-                    placeholder="Paste your code here..."
-                    rows="8"
-                    value={form.code}
-                    onChange={(e) => setForm({ ...form, code: e.target.value })}
-                    required
-                  />
-                </div>
+                <>
+                  <div className="form-group">
+                    <label htmlFor="file-name">File Name <span style={{ opacity: 0.5 }}>(optional — helps detect language)</span></label>
+                    <input
+                      id="file-name"
+                      type="text"
+                      placeholder="e.g. app.py, main.go, index.ts"
+                      value={form.fileName}
+                      onChange={(e) => setForm({ ...form, fileName: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="code-input">Code</label>
+                    <textarea
+                      id="code-input"
+                      placeholder="Paste your code here... (language is auto-detected from content)"
+                      rows="8"
+                      value={form.code}
+                      onChange={(e) => setForm({ ...form, code: e.target.value })}
+                      required
+                    />
+                  </div>
+                </>
               )}
               <button type="submit" className="btn btn-primary btn-block" id="create-project-submit" disabled={createLoading}>
                 {createLoading ? (

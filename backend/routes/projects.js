@@ -8,7 +8,7 @@ const router = Router();
 
 router.post('/create', auth, async (req, res) => {
   try {
-    const { name, source, repoUrl, code } = req.body;
+    const { name, source, repoUrl, code, fileName } = req.body;
 
     if (!name || !source) {
       return res.status(400).json({ error: 'Name and source are required' });
@@ -24,7 +24,10 @@ router.post('/create', auth, async (req, res) => {
     } else {
       if (!code) return res.status(400).json({ error: 'Code is required' });
       rawCode = code;
-      files = [{ path: 'main.js', content: code }];
+      // Use user-provided filename for correct language detection, fallback to main.js
+      // (docGenerator will auto-detect language from content anyway)
+      const codePath = fileName && fileName.includes('.') ? fileName : 'main.js';
+      files = [{ path: codePath, content: code }];
     }
 
     const { readme, fileDocs } = generateDocs(files, name, source, repoUrl);
