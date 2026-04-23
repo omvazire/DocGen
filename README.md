@@ -1,4 +1,4 @@
-# DocuGen — AI Code Documentation Generator
+# DocGen — AI Code Documentation Generator
 
 A cloud-based SaaS that generates documentation from GitHub repositories or pasted code.
 
