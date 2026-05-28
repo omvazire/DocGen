@@ -1,87 +1,166 @@
-# DocGen — AI Code Documentation Generator
+# 🚀 DocGen — AI Powered Code Documentation Generator
 
-A cloud-based SaaS that generates documentation from GitHub repositories or pasted code.
+DocGen is a cloud-based SaaS application that automatically generates clean and structured documentation from GitHub repositories or pasted source code.
 
-## Tech Stack
+Built to simplify developer workflows by turning raw code into readable project documentation with an intuitive dashboard and modern UI.
 
-- **Frontend:** React (Vite) + React Router
-- **Backend:** Node.js + Express
-- **Database:** MongoDB (Mongoose)
-- **Auth:** JWT-based
-- **Deployment:** Render
+---
 
-## Features
+## 🌐 Live Demo
 
-- User authentication (register/login with JWT)
-- GitHub repo fetching (auto-ignores node_modules, dist, .git, etc.)
-- Paste/upload code directly
-- AI-powered documentation generation (mock)
-- Auto-generated README.md + per-file documentation
-- Dashboard with project management
-- Edit and download generated docs
-- Responsive dark UI
+👉 https://docgen-frontend-tvbl.onrender.com/
 
-## Project Structure
+---
 
-```
+## ✨ Features
+
+* 🔐 JWT Authentication System
+* 📂 Import GitHub Repositories
+* 🧠 AI-Based Documentation Generation
+* 📝 Auto README.md Creation
+* 📄 Per-File Documentation Support
+* 📋 Paste or Upload Custom Code
+* 📊 Project Dashboard Management
+* ✏️ Edit Generated Documentation
+* ⬇️ Download Documentation Files
+* 🌙 Responsive Modern Dark UI
+* 🚫 Auto-Ignores Unnecessary Files
+
+  * `node_modules`
+  * `.git`
+  * `dist`
+  * `build`
+  * etc.
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React (Vite)
+* React Router DOM
+* Context API
+
+### Backend
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB
+* Mongoose
+
+### Authentication
+
+* JWT (JSON Web Tokens)
+
+### Deployment
+
+* Render
+
+---
+
+## 📁 Project Structure
+
+```bash
+DocGen/
+│
 ├── backend/
-│   ├── config/db.js
-│   ├── middleware/auth.js
+│   ├── config/
+│   │   └── db.js
+│   │
+│   ├── middleware/
+│   │   └── auth.js
+│   │
 │   ├── models/
 │   │   ├── User.js
 │   │   └── Project.js
+│   │
 │   ├── routes/
 │   │   ├── auth.js
 │   │   └── projects.js
+│   │
 │   ├── utils/
 │   │   ├── github.js
 │   │   └── docGenerator.js
+│   │
 │   ├── server.js
 │   └── package.json
+│
 ├── frontend/
 │   ├── src/
-│   │   ├── components/Navbar.jsx
-│   │   ├── context/AuthContext.jsx
+│   │   ├── components/
+│   │   │   └── Navbar.jsx
+│   │   │
+│   │   ├── context/
+│   │   │   └── AuthContext.jsx
+│   │   │
 │   │   ├── pages/
 │   │   │   ├── Login.jsx
 │   │   │   ├── Register.jsx
 │   │   │   ├── Dashboard.jsx
 │   │   │   └── ProjectView.jsx
+│   │   │
 │   │   ├── App.jsx
 │   │   └── main.jsx
-│   ├── index.html
+│   │
 │   ├── vite.config.js
 │   └── package.json
+│
 ├── render.yaml
 └── README.md
 ```
 
-## Local Setup
+---
+
+## ⚙️ Local Setup
 
 ### Prerequisites
 
-- Node.js 18+
-- MongoDB Atlas account (or local MongoDB)
-- GitHub Personal Access Token (optional, for higher API rate limits)
+Make sure you have installed:
 
-### 1. Clone the repo
+* Node.js (v18+)
+* MongoDB Atlas or Local MongoDB
+* GitHub Personal Access Token (Optional)
+
+---
+
+## 1️⃣ Clone Repository
 
 ```bash
-git clone <your-repo-url>
-cd cloud
+git clone <your-repository-url>
+cd DocGen
 ```
 
-### 2. Backend setup
+---
+
+## 2️⃣ Backend Setup
 
 ```bash
 cd backend
-cp .env.example .env
-# Edit .env with your MongoDB URI and JWT secret
 npm install
+```
+
+Create a `.env` file inside backend directory:
+
+```env
+MONGODB_URI=your_mongodb_connection
+JWT_SECRET=your_secret_key
+GITHUB_TOKEN=your_github_token_optional
+PORT=5000
+```
+
+Run backend server:
+
+```bash
 npm run dev
 ```
 
-### 3. Frontend setup
+---
+
+## 3️⃣ Frontend Setup
 
 ```bash
 cd frontend
@@ -89,45 +168,68 @@ npm install
 npm run dev
 ```
 
-The frontend runs on `http://localhost:3000` and proxies API calls to `http://localhost:5000`.
+Frontend runs on:
 
-## API Routes
+```bash
+http://localhost:3000
+```
 
-| Method | Route                | Auth | Description           |
-|--------|----------------------|------|-----------------------|
-| POST   | /api/auth/register   | No   | Register new user     |
-| POST   | /api/auth/login      | No   | Login user            |
-| POST   | /api/projects/create | Yes  | Create new project    |
-| GET    | /api/projects/get    | Yes  | List user's projects  |
-| GET    | /api/projects/:id    | Yes  | Get project by ID     |
-| PUT    | /api/projects/:id    | Yes  | Update project README |
-| DELETE | /api/projects/:id    | Yes  | Delete project        |
+Backend runs on:
 
-## Deployment (Render)
+```bash
+http://localhost:5000
+```
 
-1. Push to GitHub
-2. Go to [Render Dashboard](https://dashboard.render.com)
-3. Click **New → Blueprint**
-4. Connect your repo and select the `render.yaml`
-5. Set environment variables:
-   - `MONGODB_URI` — Your MongoDB Atlas connection string
-   - `GITHUB_TOKEN` — GitHub PAT (optional)
-6. Deploy
+---
 
-The `render.yaml` configures:
-- Backend as a **Web Service** (Node)
-- Frontend as a **Static Site** (Vite build)
+## 📡 API Routes
 
-## Environment Variables
+| Method | Route                  | Protected | Description        |
+| ------ | ---------------------- | --------- | ------------------ |
+| POST   | `/api/auth/register`   | ❌         | Register User      |
+| POST   | `/api/auth/login`      | ❌         | Login User         |
+| POST   | `/api/projects/create` | ✅         | Create Project     |
+| GET    | `/api/projects/get`    | ✅         | Get All Projects   |
+| GET    | `/api/projects/:id`    | ✅         | Get Single Project |
+| PUT    | `/api/projects/:id`    | ✅         | Update README      |
+| DELETE | `/api/projects/:id`    | ✅         | Delete Project     |
 
-| Variable      | Required | Description                    |
-|---------------|----------|--------------------------------|
-| MONGODB_URI   | Yes      | MongoDB connection string      |
-| JWT_SECRET    | Yes      | Secret for signing JWT tokens  |
-| GITHUB_TOKEN  | No       | GitHub PAT for API rate limits |
-| PORT          | No       | Backend port (default: 5000)   |
-| VITE_API_URL  | No       | Backend URL for production     |
+---
 
-## License
+## 🚀 Deployment
 
-MIT
+The project is deployed using Render.
+
+### Deployment Services
+
+* Backend → Render Web Service
+* Frontend → Render Static Site
+
+### Environment Variables
+
+| Variable       | Description                 |
+| -------------- | --------------------------- |
+| `MONGODB_URI`  | MongoDB Connection String   |
+| `JWT_SECRET`   | JWT Secret Key              |
+| `GITHUB_TOKEN` | GitHub API Token (Optional) |
+| `PORT`         | Backend Port                |
+| `VITE_API_URL` | Production Backend URL      |
+
+---
+
+## 🎯 Future Improvements
+
+* Real AI integration using LLM APIs
+* Multiple documentation templates
+* Export as PDF / Markdown
+* Team collaboration support
+* GitHub OAuth Login
+* Syntax highlighted documentation
+* Code summarization improvements
+
+---
+
+## 👨‍💻 Author
+
+Developed by Om Prabhakar Vazire
+
